@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="jquery.transit.min.js"></script>
+    <style type="text/css">
+        *{margin: 0;padding: 0;box-sizing: border-box;}
+        li{list-style: none;}
+        a{text-decoration: none; color: inherit;}
+        img{vertical-align: bottom;}
+        html,body{
+        background-color: #fff;
+        height: 100%;
+        }
+        .header{
+            width: 200px;
+            height: 200px;
+            background: url("images/logo.png");
+            margin: 100px auto;
+            text-indent: -9999px;
+            position: relative;
+        }
+        .nav{
+            display: block;
+            width: 60px;
+            height: 100px;
+            background: url("images/arr-sprite.png");
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+        .nav.prev{
+            left: -150px;
+        }
+        .nav.next{
+            right: -150px;
+            background-position: right;
+        } 
+        .sushi_list{
+            width: 2500px;
+            position: fixed;
+            left: 0;
+            bottom: 0;
+        }
+        .sushi_list ul{
+
+        }
+        .sushi_list ul li{
+            float: left;
+            position: relative;
+            left: 100vw;
+            top: 50px;
+        }
+        .sushi_list ul li.show{
+            left: 0;
+        }
+        .sushi_list ul li.up{
+            top: 0;
+        }
+        .sushi_name{
+            width: 80px;
+            text-align: center;
+            font-size: 18px;
+            color: red;
+            border-bottom: 3px solid red;
+            line-height: 50px;
+            position: relative;
+            left: 0;
+            margin: 15px;
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <div class="header">
+        <a href="#" class="nav prev">prev</a>
+        <a href="#" class="nav next">next</a>
+    </div><!-- header -->
+    <div class="sushi_list">
+        <h3 class="sushi_name"></h3>
+        <ul>
+            <li><img src="images/s01.png" alt="SABA"></li>
+            <li><img src="images/s02.png" alt="UNAGI"></li>
+            <li><img src="images/s03.png" alt="TAMAGO"></li>
+            <li><img src="images/s04.png" alt="MAKI"></li>
+            <li><img src="images/s05.png" alt="ICA"></li>
+            <li><img src="images/s06.png" alt="TAI"></li>
+            <li><img src="images/s07.png" alt="SAKE"></li>
+            <li><img src="images/s08.png" alt="TAKO"></li>
+            <li><img src="images/s09.png" alt="UBOO"></li>
+            <li><img src="images/s10.png" alt="HIRAME"></li>
+            <li><img src="images/s11.png" alt="TAMAKO"></li>
+            <li><img src="images/s12.png" alt="SAKE"></li>
+            <li><img src="images/s13.png" alt="TAMAGO"></li>
+            <li><img src="images/s14.png" alt="ICA"></li>
+            <li><img src="images/s15.png" alt="UNAGI"></li>
+            <li><img src="images/s16.png" alt="SABA"></li>
+            <li><img src="images/s01.png" alt="SABA"></li>
+            <li><img src="images/s02.png" alt="UNAGI"></li>
+            <li><img src="images/s03.png" alt="TAMAGO"></li>
+            <li><img src="images/s04.png" alt="MAKI"></li>
+            <li><img src="images/s05.png" alt="ICA"></li>
+        </ul>
+    </div><!-- sushi_list -->
+    <script lang="java">
+        $(function(){
+            // var pos = $(".header").position().left;
+            // console.log("pos:",pos)
+            $(".sushi_list li").each(function(i){
+                $(this).delay(200*i).addClass("show",2000);
+                $(this).hover(function(){
+                    var title = $(this).find("img").attr("alt")
+                    console.log("title:",title)
+                    var left = $(this).position().left;
+                    $(".sushi_name").show().css({left:left}).text(title);
+                    $(this).addClass("up",400);
+                    $(".sushi_name").css({opacity:"1"});
+                },function(){
+                    $(this).removeClass("up",400);
+                    $(".sushi_name").css({opacity:"0"})
+                })//hover
+            })//each
+            var current = 0;//li left좌표
+            $(".nav").click(function(){
+                if($(this).hasClass("prev") == true) {
+                    current +=100 
+                    // current = current + 100 위와 같은 수식
+                }else{
+                    current -=100
+                    // current = current - 100 위와 같은 수식
+                }
+                console.log("current:",current)
+                $(".sushi_list").stop().animate({left:current})
+            })//click
+        })//jq
+    </script>
+</body>
+</html>
